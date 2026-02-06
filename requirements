@@ -1,0 +1,32 @@
+# VeriSure Forensic AI: Setup & Deployment Guide
+
+## 1. Local Development Setup
+Since this project uses ESM (ECMAScript Modules) directly in the browser via `esm.sh`, you don't need a heavy build step like Webpack or Vite for simple local preview.
+
+### Prerequisite: API Key
+You **must** have a valid Google Gemini API Key. 
+- Visit [AI Studio](https://aistudio.google.com/)
+- Create a new API Key.
+- Note: For "Search Grounding," ensure your project is linked to a GCP project with the Search Tool enabled.
+
+### Running the App
+1. Clone this directory.
+2. Start a simple local server to avoid CORS issues with modules:
+   ```bash
+   # If you have Python
+   python3 -m http.server 8000
+   # If you have Node/npx
+   npx serve .
+   ```
+3. Open `http://localhost:8000` in your browser.
+
+## 2. Module Details
+The application imports the following core logic:
+- **@google/genai**: Handles the connection to the Gemini 3 models.
+- **Lucide React**: Provides the forensic iconography.
+- **Recharts**: Renders the vertical bar charts for model confidence.
+
+## 3. Troubleshooting
+- **API Errors (429)**: You are hitting rate limits. Gemini-3-Flash has higher limits than Pro, but high-resolution image analysis is token-intensive.
+- **Image Upload Issues**: Ensure the image is under 25MB. Web-based Base64 encoding can be memory-intensive for extremely large files.
+- **Search Results Not Showing**: Ensure your Gemini model selection supports the `googleSearch` tool (Gemini 3 Flash/Pro).
